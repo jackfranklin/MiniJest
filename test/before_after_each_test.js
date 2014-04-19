@@ -14,7 +14,7 @@ testThing.fn.someOtherTest = function() {};
 describe('beforeEach', function() {
   it('runs once for each test', function() {
     testThing.fn.beforeEach = beforeSpy;
-    testThing.run();
+    testThing.run({ noExit: true });
     assert.equal(2, beforeSpy.callCount);
   });
 });
@@ -22,7 +22,7 @@ describe('beforeEach', function() {
 describe('afterEach', function() {
   it('runs once for each test', function() {
     testThing.fn.afterEach = afterSpy;
-    testThing.run();
+    testThing.run({ noExit: true });
     assert.equal(2, afterSpy.callCount);
   });
 });
