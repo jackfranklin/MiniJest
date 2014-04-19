@@ -27,9 +27,9 @@ testMyThing.fn.testCustomMatcher = function() {
 testMyThing.fn.asyncTest = function(done) {
   setTimeout(function() {
     var res = 5;
-    done(function() {
-      this.assertEqual(res, 5);
-    });
+    // done(function() {
+    //   this.assertEqual(res, 5);
+    // });
   }, 500);
 };
 
