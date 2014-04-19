@@ -9,6 +9,23 @@ MiniJest.Base = function() {
 };
 
 MiniJest.Base.prototype = {
+  runFunction: function(testName) {
+    var fnStr = this.fn[testName].toString();
+    // this test needs to be so much better
+    if(fnStr.indexOf('(done)') > - 1) {
+      this.fn[testName].call(this.matchers, function(asserts) {
+        try {
+          asserts.call(this.matchers);
+          this.reporter.onSuccess(testName);
+        } catch(e) {
+          this.reporter.onError(e);
+        }
+      }.bind(this));
+    } else {
+      this.fn[testName].call(this.matchers);
+      this.reporter.onSuccess(testName);
+    }
+  },
   run: function() {
     if(this.fn.beforeAll) this.fn.beforeAll();
     for(var testName in this.fn) {
@@ -18,8 +35,7 @@ MiniJest.Base.prototype = {
          testName === 'afterAll' ) continue;
       try {
         if(this.fn.beforeEach) this.fn.beforeEach();
-        this.fn[testName].call(this.matchers);
-        this.reporter.onSuccess(testName);
+        this.runFunction(testName);
       } catch(e) {
         this.reporter.onError(e);
       } finally {

@@ -23,7 +23,7 @@ testMyThing.run();
 ## Customising the Reporter
 You can change the reporter like so:
 
-```
+```js
 var MiniJest = require('./index.js');
 
 var testMyThing = new MiniJest.Base();
@@ -59,4 +59,21 @@ testMyThing.fn.testCustomMatcher = function() {
 
 testMyThing.run();
 ```
+
+## Handling Async
+
+MiniJest handles async a little differently. An async test takes a callback, but you pass that callback a function in which you make your assertions:
+
+```js
+testMyThing.fn.asyncTest = function(done) {
+  setTimeout(function() {
+    var res = 5;
+    done(function() {
+      this.assertEqual(res, 5);
+    });
+  }, 500);
+};
+```
+
+This seems a little odd but is actually quite a nice way of doing things in practice.
 
