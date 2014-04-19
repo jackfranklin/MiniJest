@@ -51,5 +51,30 @@ describe('matchers', function() {
       });
     });
   });
+
+  describe('deepEqual', function() {
+    it('does not throw when expected', function() {
+      assert.doesNotThrow(function() {
+        matchers.assertDeepEqual({}, {});
+        matchers.assertDeepEqual({x: 1, y: 2}, {y: 2, x: 1});
+        matchers.assertDeepEqual({
+          x: { y: 1 }
+        }, {
+          x: { y: 1 }
+        });
+      });
+    });
+
+    it('throws when expected', function() {
+      assert.throws(function() {
+        matchers.assertDeepEqual({x: 1, y: 3}, {y: 2, x: 1});
+        matchers.assertDeepEqual({
+          x: { y: 2 }
+        }, {
+          x: { y: 1 }
+        });
+      });
+    });
+  });
 });
 
