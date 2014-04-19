@@ -6,4 +6,55 @@ This is my attempt at a testing framework, for fun more than anything else. Loos
 
 ## Example
 
-See `example.js` for an example.
+```js
+var MiniJest = require('./index.js');
+
+var testMyThing = new MiniJest.Base();
+
+// all tests are added to the fn object
+testMyThing.fn.testTwoPlusTwoEqualsFour = function() {
+  this.assertEqual(2 + 3, 4);
+};
+
+// nothing happens without this line!
+testMyThing.run();
+```
+
+## Customising the Reporter
+You can change the reporter like so:
+
+```
+var MiniJest = require('./index.js');
+
+var testMyThing = new MiniJest.Base();
+
+testMyThing.reporter.onSuccess = function(testName) {
+    // called when test passes
+};
+
+testMyThing.reporter.onError = function(err) {
+    // called when test fails
+};
+
+testMyThing.run();
+```
+
+## Adding Matchers
+
+```js
+var MiniJest = require('./index.js');
+
+var testMyThing = new MiniJest.Base();
+
+// a new matcher that always fails
+testMyThing.alwaysFailsAssertion = function() {
+    throw new Error('test failed');
+};
+
+testMyThing.fn.testCustomMatcher = function() {
+    this.alwaysFailsAssertion();
+};
+
+testMyThing.run();
+```
+
