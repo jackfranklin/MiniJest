@@ -47,7 +47,9 @@ var MiniJest = require('./index.js');
 var testMyThing = new MiniJest.Base();
 
 // a new matcher that always fails
-testMyThing.alwaysFailsAssertion = function() {
+// matchers added to the matchers object
+// a failed matcher is expected to throw an error
+testMyThing.matchers.alwaysFailsAssertion = function() {
     throw new Error('test failed');
 };
 

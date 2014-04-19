@@ -16,7 +16,7 @@ testMyThing.fn.testSomethingElse = function() {
   });
 };
 
-testMyThing.someAssert = function() {
+testMyThing.matchers.someAssert = function() {
   throw new Error('test fail');
 };
 

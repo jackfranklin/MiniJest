@@ -10,28 +10,26 @@ MiniJest.Base = function() {
 
 MiniJest.Base.prototype = {
   run: function() {
-    if(this.fn.beforeAll) this.fn.beforeAll.call(this);
+    if(this.fn.beforeAll) this.fn.beforeAll();
     for(var testName in this.fn) {
       if(testName === 'beforeEach' ||
          testName === 'afterEach' ||
          testName === 'beforeAll' ||
          testName === 'afterAll' ) continue;
       try {
-        if(this.fn.beforeEach) this.fn.beforeEach.call(this);
-        this.fn[testName].call(this);
+        if(this.fn.beforeEach) this.fn.beforeEach();
+        this.fn[testName].call(this.matchers);
         this.reporter.onSuccess(testName);
       } catch(e) {
         this.reporter.onError(e);
       } finally {
-        if(this.fn.afterEach) this.fn.afterEach.call(this);
+        if(this.fn.afterEach) this.fn.afterEach();
       }
     }
-    if(this.fn.afterAll) this.fn.afterAll.call(this);
+    if(this.fn.afterAll) this.fn.afterAll();
   },
 };
 
-for(var matcher in matchers) {
-  MiniJest.Base.prototype[matcher] = matchers[matcher];
-}
+MiniJest.Base.prototype.matchers = matchers;
 
 module.exports = MiniJest;
