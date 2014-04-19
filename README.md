@@ -1,8 +1,8 @@
 # MiniJest
 
-Because the world needs more testing frameworks.
+A Node testing framework inspired by MiniTest for Ruby.
 
-This is my attempt at a testing framework, for fun more than anything else. Loosely inspired by Ruby MiniTest and its way of writing tests that are just methods on a class.
+I like the idea of making tests methods on an object. I find it acts as a nice natural divider to make sure each test file isn't doing too much.
 
 ## Example
 
@@ -20,6 +20,12 @@ testMyThing.fn.testTwoPlusTwoEqualsFour = function() {
 testMyThing.run();
 ```
 
+To run your tests, just execute them through Node:
+
+```
+$ node myTest.js
+```
+
 ## Customising the Reporter
 You can change the reporter like so:
 
@@ -34,6 +40,10 @@ testMyThing.reporter.onSuccess = function(testName) {
 
 testMyThing.reporter.onError = function(err) {
     // called when test fails
+};
+
+testMyThing.reporter.onAsyncTimeout = function(testName) {
+    // called when an async test times out
 };
 
 testMyThing.run();
